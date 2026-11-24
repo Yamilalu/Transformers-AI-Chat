@@ -13,6 +13,7 @@ function navigateTo(path) {
   router();
 };
 
+
 function router() {
   const path = window.location.pathname;
 
@@ -25,33 +26,83 @@ function router() {
   } else if (path === "/about") {
     app.innerHTML = `
       <main class="about">
-        <p class="eyebrow">TRANSFORMERS AI CHAT</p>
 
-        <h1>ACERCA DEL <span>PROYECTO.</span></h1>
+        <header class="about-header">
+          <h2>TRANSFORMERS <span>AI</span></h2>
+          <button id="back-home">VOLVER AL INICIO</button>
+        </header>
 
-        <p>
-          Este proyecto permite conversar con tres personajes
-          del universo Transformers. Cada uno tiene su propia
-          personalidad y una forma diferente de responder.
-        </p>
+        <section class="about-hero">
+          <p class="eyebrow">SISTEMA DE INFORMACIÓN · CYBERTRON</p>
+          <h1>UNA NUEVA ERA<br><span>DE CONEXIÓN.</span></h1>
+          <p class="about-intro">
+            Transformers AI Chat es una experiencia interactiva
+            que une el universo Transformers con la inteligencia
+            artificial. Elegí tu personaje favorito y descubrí
+            una nueva forma de conversar.
+          </p>
+        </section>
 
-        <h2>PERSONAJES</h2>
-        <ul>
-          <li>Optimus Prime — Sabiduría y liderazgo.</li>
-          <li>Bumblebee — Humor y música.</li>
-          <li>Megatron — Poder y estrategia.</li>
-        </ul>
+        <section class="about-characters">
+          <p class="eyebrow">ARCHIVOS DE CYBERTRON</p>
+          <h2>CONOCÉ A LOS <span>PERSONAJES.</span></h2>
 
-        <h2>TECNOLOGÍAS UTILIZADAS</h2>
-        <p>HTML · CSS · JavaScript · Vite · Vitest · Gemini API</p>
+          <div class="about-grid">
 
-        <button id="back-home">VOLVER AL INICIO</button>
+            <article class="about-card optimus">
+              <img src="/images/optimus.jpg" alt="Optimus Prime">
+              <div class="about-card-content">
+                <span class="faction">AUTOBOT</span>
+                <h3>OPTIMUS PRIME</h3>
+                <p>Liderazgo, sabiduría y honor. Un protector que lucha por la libertad.</p>
+              </div>
+            </article>
+
+            <article class="about-card bumblebee">
+              <img src="/images/bumblebee.jpg" alt="Bumblebee">
+              <div class="about-card-content">
+                <span class="faction">AUTOBOT</span>
+                <h3>BUMBLEBEE</h3>
+                <p>Valentía, humor y música. Un compañero siempre listo para la aventura.</p>
+              </div>
+            </article>
+
+            <article class="about-card megatron">
+              <img src="/images/megatron.jpg" alt="Megatron">
+              <div class="about-card-content">
+                <span class="faction">DECEPTICON</span>
+                <h3>MEGATRON</h3>
+                <p>Poder, estrategia y ambición. Un líder decidido a imponer su dominio.</p>
+              </div>
+            </article>
+
+          </div>
+        </section>
+
+        <section class="about-tech">
+          <p class="eyebrow">TECNOLOGÍA APLICADA</p>
+          <h2>CONSTRUIDO CON <span>INTELIGENCIA.</span></h2>
+
+          <div class="tech-list">
+            <span>HTML5</span>
+            <span>CSS3</span>
+            <span>JavaScript</span>
+            <span>Vite</span>
+            <span>Gemini API</span>
+            <span>Vercel Functions</span>
+            <span>Vitest</span>
+          </div>
+        </section>
+
+        <footer class="about-footer">
+          TRANSFORMERS AI CHAT · EL FUTURO COMIENZA AQUÍ
+        </footer>
+
       </main>
     `;
 
     document.querySelector("#back-home").addEventListener("click", () => {
-      history.pushState({}, "", "/home");
-      window.dispatchEvent(new PopStateEvent("popstate"));
+      navigateTo("/home");
     });
 
   } else {
@@ -66,10 +117,11 @@ function renderHome() {
     <header class="header">
       <h2>TRANSFORMERS <span>AI</span></h2>
       <span class="status">● SISTEMA ACTIVO</span>
+      <button id="about-button">ACERCA DEL PROYECTO</button>
     </header>
 
     <main class="home">
-      <p class="eyebrow">EL UNIVERSO TRANSFORMERS</p>
+      <p class="eyebrow">EL UNIVERSO TRANSFORMERS</p> 
 
       <h1>ELIGE TU<br><span>ALIADO.</span></h1>
 
@@ -109,7 +161,17 @@ function renderHome() {
       TRANSFORMERS AI CHAT · UNA NUEVA ERA COMIENZA
     </footer>
   `;
+
+  const aboutButton = document.querySelector("#about-button");
+
+if (aboutButton) {
+  aboutButton.addEventListener("click", () => {
+    navigateTo("/about");
+  });
 }
+
+}
+
 
 function selectCharacter(character) {
   selectedCharacter = character;
