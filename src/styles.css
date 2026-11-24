@@ -582,3 +582,133 @@ footer {
     padding-right: 5%;
   }
 }
+
+/* RADIO DE BUMBLEBEE */
+#radio-toggle {
+  padding: 10px 16px;
+  background: transparent;
+  color: #e5ad32;
+  border: 1px solid #e5ad32;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#radio-toggle:hover {
+  background: #e5ad32;
+  color: #080d14;
+}
+
+#radio-toggle.radio-active {
+  background: rgba(229, 173, 50, 0.15);
+  box-shadow: 0 0 12px rgba(229, 173, 50, 0.5);
+  animation: radioPulse 1.5s infinite;
+}
+
+@keyframes radioPulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(229, 173, 50, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(229, 173, 50, 0.8);
+  }
+}
+
+/* RADIO CYBERTRONIANA */
+#radio-player {
+  width: 100%;
+  max-width: 420px;
+  margin: 12px auto;
+  padding: 14px;
+  background: linear-gradient(145deg, #111923, #202b35);
+  border: 1px solid rgba(229, 173, 50, 0.65);
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(229, 173, 50, 0.15);
+}
+
+#radio-song-select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  color: #e5ad32;
+  background: #080d14;
+  border: 1px solid #e5ad32;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#radio-song-select option {
+  color: #e5ad32;
+  background: #080d14;
+}
+
+#radio-song-frame {
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+}
+
+/* DISTRIBUCIÓN DEL CHAT Y RADIO */
+.chat-content {
+  display: flex;
+  align-items: stretch;
+  gap: 20px;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  padding: 15px 4%;
+}
+
+.chat-content .messages {
+  flex: 1;
+  width: auto;
+  max-width: none;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  overflow-y: auto;
+}
+
+.radio-sidebar {
+  width: 320px;
+  flex-shrink: 0;
+  padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+#radio-player {
+  width: 100%;
+  max-width: 420px;
+  margin: 12px auto;
+  padding: 10px;
+  background: linear-gradient(145deg, #111923, #202b35);
+  border: 1px solid rgba(229, 173, 50, 0.65);
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(229, 173, 50, 0.15);
+  height: auto;
+}
+
+#radio-song-frame {
+  display: block;
+  width: 100%;
+  height: 180px;
+  border: none;
+  border-radius: 8px;
+}
+
+@media (max-width: 750px) {
+  .chat-content {
+    flex-direction: column;
+  }
+
+  .radio-sidebar {
+    width: 100%;
+  }
+}
