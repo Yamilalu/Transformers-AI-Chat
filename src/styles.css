@@ -858,7 +858,8 @@ footer {
 }
 
 /* BOTÓN CAMBIO DE TEMA */
-#theme-toggle {
+#theme-toggle,
+#chat-theme-toggle {
   padding: 10px 18px;
   background: linear-gradient(145deg, #263747, #101923);
   color: #e5ad32;
@@ -871,7 +872,8 @@ footer {
   transition: all 0.3s ease;
 }
 
-#theme-toggle:hover {
+#theme-toggle:hover,
+#chat-theme-toggle:hover {
   background: #e5ad32;
   color: #080d14;
   box-shadow: 0 0 15px rgba(229, 173, 50, 0.4);

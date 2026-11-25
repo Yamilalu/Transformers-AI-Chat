@@ -140,6 +140,7 @@ export function renderChat(app, characterId) {
 </div>
 
         <div class="chat-header-actions">
+        <button id="chat-theme-toggle">☀️ MODO CLARO</button>
         <button id="clear-history">🗑 BORRAR HISTORIAL</button>
 
         ${characterId === "bumblebee" ? `
@@ -182,6 +183,31 @@ const conversationHistory = conversationhistories[characterId];
 const radioButton = document.querySelector("#radio-toggle");
 const radioSidebar = document.querySelector(".radio-sidebar");
 const radioPlayer = document.querySelector("#radio-player");
+const chatThemeButton = document.querySelector("#chat-theme-toggle");
+
+if (chatThemeButton) {
+  const updateThemeButton = () => {
+    const currentTheme =
+      document.documentElement.getAttribute("data-theme") || "dark";
+
+    chatThemeButton.textContent =
+      currentTheme === "dark" ? "☀️ MODO CLARO" : "🌙 MODO OSCURO";
+  };
+
+  updateThemeButton();
+
+  chatThemeButton.addEventListener("click", () => {
+    const currentTheme =
+      document.documentElement.getAttribute("data-theme") || "dark";
+
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+
+    updateThemeButton();
+  });
+}
 
 let radioEnabled = false;
 
