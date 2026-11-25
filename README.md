@@ -183,6 +183,15 @@ https://transformers-ai-chat.vercel.app/
 
 https://github.com/Yamilalu/Transformers-AI-Chat
 
+### Pasos para desplegar en Vercel
+
+1. Ingresar a [Vercel](https://vercel.com/) e iniciar sesión.
+2. Seleccionar la opción para agregar un nuevo proyecto.
+3. Importar el repositorio de GitHub `Transformers-AI-Chat`.
+4. Configurar la variable de entorno `GEMINI_API_KEY` con la clave correspondiente.
+5. Realizar el despliegue y esperar a que finalice.
+6. Una vez publicado, ingresar a la URL proporcionada por Vercel para comprobar que la aplicación funciona correctamente.
+
 El proyecto está conectado a GitHub con Vercel, por lo que los cambios enviados a la rama `main` pueden generar nuevos despliegues automáticamente.
 
 La clave `GEMINI_API_KEY` está configurada como variable de entorno en Vercel para mantenerla protegida.
