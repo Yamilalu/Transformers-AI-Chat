@@ -9,7 +9,8 @@ const characters = {
     name: "Optimus Prime",
     faction: "AUTOBOT",
     color: "#2876c7",
-    greeting: "La libertad es el derecho de todos los seres conscientes. ¿En qué puedo ayudarte?"
+    greeting: "La libertad es el derecho de todos los seres conscientes. ¿En qué puedo ayudarte?",
+    welcomeAudio: "Bienvenido, humano. Soy Optimus Prime, líder de los Autobots. Estoy listo para ayudarte."
   },
   bumblebee: {
     name: "Bumblebee",
@@ -113,12 +114,43 @@ function playBeeResponseSound() {
 export function renderChat(app, characterId) {
   const character = characters[characterId];
 
-  document.documentElement.style.setProperty("--character-color", character?.color || "#2876c7");
+  document.documentElement.style.setProperty(
+    "--character-color",
+    character?.color || "#2876c7"
+  );
 
   if (!character) {
     app.innerHTML = "<h1>Personaje no encontrado</h1>";
     return;
   }
+
+if (characterId === "optimus") {
+  const optimusAudio = new Audio("/audio/optimus-welcome.mp3");
+
+  optimusAudio.volume = 1;
+
+  document.addEventListener("click", function playOptimusAudio() {
+    optimusAudio.play().catch(error => {
+      console.warn("No se pudo reproducir el audio de Optimus:", error);
+    });
+
+    document.removeEventListener("click", playOptimusAudio);
+  }, { once: true });
+}
+
+if (characterId === "megatron") {
+  const megatronAudio = new Audio("/audio/megatron-welcome.mp3");
+
+  megatronAudio.volume = 1;
+
+  document.addEventListener("click", function playMegatronAudio() {
+    megatronAudio.play().catch(error => {
+      console.warn("No se pudo reproducir el audio de Megatron:", error);
+    });
+
+    document.removeEventListener("click", playMegatronAudio);
+  }, { once: true });
+}
 
   app.innerHTML = `
     <main class="chat-screen">
