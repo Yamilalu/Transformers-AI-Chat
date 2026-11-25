@@ -111,7 +111,7 @@ function playBeeResponseSound() {
   oscillator.onended = () => audioContext.close();
 }
 
-export function renderChat(app, characterId) {
+export function renderChat(app, characterId, playWelcomeAudio = true) {
   const character = characters[characterId];
 
   document.documentElement.style.setProperty(
@@ -124,7 +124,7 @@ export function renderChat(app, characterId) {
     return;
   }
 
-if (characterId === "optimus") {
+if (characterId === "optimus" && playWelcomeAudio) {
   const optimusAudio = new Audio("/audio/optimus-welcome.mp3");
 
   optimusAudio.volume = 1;
@@ -138,7 +138,7 @@ if (characterId === "optimus") {
   }, { once: true });
 }
 
-if (characterId === "megatron") {
+if (characterId === "megatron" && playWelcomeAudio) {
   const megatronAudio = new Audio("/audio/megatron-welcome.mp3");
 
   megatronAudio.volume = 1;
@@ -460,7 +460,7 @@ document.querySelector("#clear-history").addEventListener("click", () => {
       JSON.stringify(conversationhistories)
     );
 
-    renderChat(app, characterId);
+    renderChat(app, characterId, false);
   }
 });
 }
