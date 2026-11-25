@@ -124,15 +124,28 @@ export function renderChat(app, characterId) {
     <main class="chat-screen">
       <header class="chat-header">
         <button id="back-home">← VOLVER</button>
-        <div>
-          <h2>${character.name}</h2>
-          <span style="color: ${character.color}">
-            ${character.faction}
-          </span>
-        </div>
-            ${characterId === "bumblebee" ? `
-        <button id="radio-toggle">🔊 ACTIVAR RADIO</button>
-` : ""}
+
+        <div class="character-profile">
+  <img
+    src="/images/${characterId === "optimus" ? "optimus2" : characterId === "bumblebee" ? "bee" : "megatron2"}.png"
+    alt="${character.name}"
+    class="character-avatar"
+  >
+  <div>
+    <h2>${character.name}</h2>
+    <span style="color: ${character.color}">
+      ${character.faction}
+    </span>
+  </div>
+</div>
+
+        <div class="chat-header-actions">
+        <button id="clear-history">🗑 BORRAR HISTORIAL</button>
+
+        ${characterId === "bumblebee" ? `
+          <button id="radio-toggle">🔊 ACTIVAR RADIO</button>
+        ` : ""}
+         </div>
       </header>
 
       <div class="chat-content">
@@ -167,6 +180,7 @@ const input = document.querySelector("#message-input");
 const messages = document.querySelector("#messages");
 const conversationHistory = conversationhistories[characterId];
 const radioButton = document.querySelector("#radio-toggle");
+const radioSidebar = document.querySelector(".radio-sidebar");
 const radioPlayer = document.querySelector("#radio-player");
 
 let radioEnabled = false;
@@ -175,10 +189,11 @@ if (radioButton) {
   radioButton.addEventListener("click", () => {
     radioEnabled = !radioEnabled;
     radioButton.classList.toggle("radio-active", radioEnabled);
+  
 
     if (radioEnabled) {
-  radioButton.textContent = "📻 RADIO ENCENDIDA";
-  playRadioSound();
+  radioButton.textContent = "📻 APAGAR RADIO";
+  radioSidebar.classList.add("radio-visible");
 
   radioPlayer.innerHTML = `
     <select id="radio-song-select">
@@ -204,6 +219,13 @@ const songFrame = document.querySelector("#radio-song-frame");
 songSelect.addEventListener("change", () => {
   songFrame.src = `https://embed.music.apple.com/us/song/${songSelect.value}`;
 });
+
+playRadioSound();
+
+} else {
+  radioSidebar.classList.remove("radio-visible");
+  radioPlayer.innerHTML = "";
+  radioButton.textContent = "📻 ACTIVAR RADIO";
 }
   });
 }
@@ -217,6 +239,7 @@ conversationHistory.forEach((message) => {
     paragraph.textContent = message.parts[0].text;
 
     const time = document.createElement("small");
+    time.classList.add("message-time");
     time.textContent = message.timestamp ? new Date(message.timestamp).toLocaleTimeString("es-AR", { 
       hour: "2-digit", 
       minute: "2-digit"
@@ -229,30 +252,27 @@ conversationHistory.forEach((message) => {
     messageElement.classList.add("message", "character-message");
 
     const name = document.createElement("strong");
-    name.textContent = character.name;
+name.textContent = character.name;
 
-    const paragraph = document.createElement("p");
-    paragraph.textContent = message.parts[0].text;
+const paragraph = document.createElement("p");
+paragraph.textContent = message.parts[0].text;
 
-    messageElement.appendChild(name);
-    messageElement.appendChild(paragraph);
+const time = document.createElement("small");
+time.classList.add("message-time");
+time.textContent = message.timestamp ? new Date(message.timestamp).toLocaleTimeString("es-AR", {
+  hour: "2-digit",
+  minute: "2-digit"
+}) : "";
 
-    const time = document.createElement("small");
-    time.textContent = message.timestamp ? new Date(message.timestamp).toLocaleTimeString("es-AR", {
-      hour: "2-digit",
-      minute: "2-digit"
-    }) : "";  
+messageElement.appendChild(name);
+messageElement.appendChild(paragraph);
+messageElement.appendChild(time)
 
-    messageElement.appendChild(time);
   }
 
   messages.appendChild(messageElement);
-  
+  messages.scrollTop = messages.scrollHeight;
 });
-
-  setTimeout(() => {
-    messages.scrollTop = messages.scrollHeight;
-  }, 300);
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -364,8 +384,25 @@ messages.appendChild(loading);
   }
 });
 
-  document.querySelector("#back-home").addEventListener("click", () => {
-    history.pushState({}, "", "/home");
-    window.dispatchEvent(new PopStateEvent("popstate"));
-  });
+document.querySelector("#back-home").addEventListener("click", () => {
+  history.pushState({}, "", "/home");
+  window.dispatchEvent(new PopStateEvent("popstate"));
+});
+
+document.querySelector("#clear-history").addEventListener("click", () => {
+  const confirmDelete = confirm(
+    `¿Querés borrar el historial de ${character.name}?`
+  );
+
+  if (confirmDelete) {
+    conversationhistories[characterId] = [];
+
+    localStorage.setItem(
+      "transformers-chat-histories",
+      JSON.stringify(conversationhistories)
+    );
+
+    renderChat(app, characterId);
+  }
+});
 }

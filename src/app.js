@@ -15,8 +15,10 @@ function navigateTo(path) {
 
 
 function router() {
-  const path = window.location.pathname;
+  const savedTheme = localStorage.getItem("theme") || "dark";
+  document.documentElement.setAttribute("data-theme", savedTheme);
 
+  const path = window.location.pathname;
   if (path === "/" || path === "/home") {
     renderHome();
 
@@ -117,8 +119,9 @@ function renderHome() {
     <header class="header">
       <h2>TRANSFORMERS <span>AI</span></h2>
       <span class="status">● SISTEMA ACTIVO</span>
+      <button id="theme-toggle">☀️ MODO CLARO</button>
       <button id="about-button">ACERCA DEL PROYECTO</button>
-    </header>
+     </header>
 
     <main class="home">
       <p class="eyebrow">EL UNIVERSO TRANSFORMERS</p> 
@@ -167,6 +170,29 @@ function renderHome() {
 if (aboutButton) {
   aboutButton.addEventListener("click", () => {
     navigateTo("/about");
+  });
+}
+
+const themeButton = document.querySelector("#theme-toggle");
+const savedTheme = localStorage.getItem("theme") || "dark";
+
+document.documentElement.setAttribute("data-theme", savedTheme);
+
+if (themeButton) {
+  themeButton.textContent =
+    savedTheme === "light" ? "🌙 MODO OSCURO" : "☀️ MODO CLARO";
+
+  themeButton.addEventListener("click", () => {
+    const currentTheme =
+      document.documentElement.getAttribute("data-theme") || "dark";
+
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+
+    themeButton.textContent =
+      newTheme === "light" ? "🌙 MODO OSCURO" : "☀️ MODO CLARO";
   });
 }
 
